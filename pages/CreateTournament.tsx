@@ -12,25 +12,8 @@ export const CreateTournament: React.FC = () => {
   const [endDate, setEndDate] = useState('');
 
   const handleSave = () => {
-      if (!name) {
-          alert("Please enter tournament name");
-          return;
-      }
-      
-      const newTournament = {
-          id: Date.now().toString(),
-          name,
-          season,
-          type,
-          startDate,
-          endDate,
-          status: 'Upcoming',
-          teams: []
-      };
-
-      const existing = JSON.parse(localStorage.getItem('yugachethana_tournaments') || '[]');
-      localStorage.setItem('yugachethana_tournaments', JSON.stringify([newTournament, ...existing]));
-      
+      // Mock Save
+      alert("Tournament Created!");
       navigate('/tournaments');
   };
 

@@ -2,13 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Settings, Users, Calendar, Trophy, ChevronRight, Info } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { MatchFormat, Team, MatchStatus, MatchSettings, BallType, PitchType, Tournament } from '../types';
+import { MatchFormat, Team, MatchStatus, MatchSettings, BallType, PitchType } from '../types';
 
 export const CreateMatch: React.FC = () => {
   const navigate = useNavigate();
   const [teams, setTeams] = useState<Team[]>([]);
-  const [tournaments, setTournaments] = useState<Tournament[]>([]);
-  const [selectedTournament, setSelectedTournament] = useState<string>('');
   const [showSettings, setShowSettings] = useState(false);
   const [selectingTeamFor, setSelectingTeamFor] = useState<'A' | 'B' | null>(null);
 
@@ -28,7 +26,7 @@ export const CreateMatch: React.FC = () => {
 
   // Match Settings
   const [settings, setSettings] = useState<MatchSettings>({
-      wagonWheel: false,
+      wagonWheel: true,
       addExtrasToWide: true,
       addExtrasToNoBall: true,
       ballsPerOver: 6,
@@ -55,13 +53,6 @@ export const CreateMatch: React.FC = () => {
         setTeams(mocks);
         localStorage.setItem('yugachethana_teams', JSON.stringify(mocks));
     }
-  }, []);
-
-  useEffect(() => {
-      const savedTournaments = localStorage.getItem('yugachethana_tournaments');
-      if (savedTournaments) {
-          setTournaments(JSON.parse(savedTournaments));
-      }
   }, []);
 
   // Update defaults when format changes
@@ -98,11 +89,6 @@ export const CreateMatch: React.FC = () => {
           alert("Please select both teams");
           return;
       }
-      
-      if (teamA.id === teamB.id) {
-          alert("Both teams cannot be the same! Please select different teams.");
-          return;
-      }
 
       const newMatch = {
           id: Date.now().toString(),
@@ -116,7 +102,6 @@ export const CreateMatch: React.FC = () => {
           time: time,
           venue: venue,
           season: season,
-          tournamentId: selectedTournament,
           settings: settings,
           ballType: ballType,
           pitchType: pitchType,
@@ -148,23 +133,8 @@ export const CreateMatch: React.FC = () => {
        </div>
 
        <div className="max-w-xl mx-auto space-y-6 p-4">
-            {/* Tournament Selection */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
-                <label className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase mb-2 block">Tournament / Series</label>
-                <select
-                    value={selectedTournament}
-                    onChange={(e) => setSelectedTournament(e.target.value)}
-                    className="w-full p-3 bg-gray-50 dark:bg-gray-700 border-none rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-cricket-green font-medium"
-                >
-                    <option value="">Friendly Match (No Tournament)</option>
-                    {tournaments.map(t => (
-                        <option key={t.id} value={t.id}>{t.name} ({t.season})</option>
-                    ))}
-                </select>
-            </div>
-
-            {/* Section 1: Teams */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex justify-between items-center">
+           {/* Section 1: Teams */}
+           <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 flex justify-between items-center">
                {/* Team A */}
                <div className="flex flex-col items-center gap-2 text-center w-1/3 group cursor-pointer" onClick={() => setSelectingTeamFor('A')}>
                    <div className="w-20 h-20 rounded-full bg-gray-50 dark:bg-gray-700 border-2 border-dashed border-gray-300 dark:border-gray-500 flex items-center justify-center overflow-hidden group-hover:border-cricket-green transition-colors">
@@ -394,6 +364,7 @@ export const CreateMatch: React.FC = () => {
                    <div className="space-y-4 overflow-y-auto max-h-[60vh] pr-2">
                        {/* Toggles */}
                        {[
+                           { label: 'Wagon Wheel', key: 'wagonWheel' },
                            { label: 'Add Extras to Wide', key: 'addExtrasToWide' },
                            { label: 'Add Extras to No Ball', key: 'addExtrasToNoBall' },
                            { label: 'Wide Balls to Batsman', key: 'addWideBallsToBatsman' },

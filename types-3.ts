@@ -45,17 +45,6 @@ export enum PitchType {
   MATTING = 'Matting'
 }
 
-export enum DismissalType {
-  BOWLED = 'Bowled',
-  CAUGHT = 'Caught',
-  LBW = 'LBW',
-  RUN_OUT = 'Run Out',
-  STUMPED = 'Stumped',
-  HIT_WICKET = 'Hit Wicket',
-  RETIRED = 'Retired',
-  OTHER = 'Other'
-}
-
 export interface UserProfile {
   id: string;
   email: string;
@@ -137,7 +126,6 @@ export interface Inning {
   oversPlayed: string;
   runRate: number;
   didNotBat: string[];
-  recentBalls?: string[]; // Array of strings like "1", "4", "W", "wd"
 }
 
 export interface BallEvent {
