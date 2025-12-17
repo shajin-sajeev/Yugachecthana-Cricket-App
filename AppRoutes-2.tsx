@@ -17,7 +17,6 @@ import { Tournaments } from './pages/Tournaments';
 import { CreateTournament } from './pages/CreateTournament';
 import { CreateMatch } from './pages/CreateMatch';
 import { MatchSetup } from './pages/MatchSetup';
-import { ClubManagement } from './pages/ClubManagement';
 import { useAuth } from './components/AuthContext';
 
 // Auth Guard Component
@@ -48,9 +47,6 @@ export const AppRoutes: React.FC = () => {
       <Route path="/profile" element={<PrivateRoute><Layout><UserProfile /></Layout></PrivateRoute>} />
       <Route path="/player/:id" element={<PrivateRoute><Layout><PlayerProfile /></Layout></PrivateRoute>} />
       
-      {/* Club Management (Any user can access to Create, but view changes if they have a club) */}
-      <Route path="/club" element={<PrivateRoute><Layout><ClubManagement /></Layout></PrivateRoute>} />
-
       {/* Matches */}
       <Route path="/matches" element={<PrivateRoute><Layout><Matches /></Layout></PrivateRoute>} />
       <Route path="/matches/new" element={<AdminRoute><Layout><CreateMatch /></Layout></AdminRoute>} />

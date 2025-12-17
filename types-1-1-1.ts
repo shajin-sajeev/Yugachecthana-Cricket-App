@@ -10,9 +10,7 @@ export enum MatchFormat {
   T20 = 'T20',
   ODI = 'ODI',
   TEST = 'Test',
-  BOX = 'Box Cricket',
-  THE_HUNDRED = 'The Hundred',
-  PAIR_CRICKET = 'Pair Cricket'
+  BOX = 'Box Cricket'
 }
 
 export enum MatchStatus {
@@ -22,48 +20,9 @@ export enum MatchStatus {
 }
 
 export enum UserRole {
-  SUPER_ADMIN = 'super_admin', // Club Creator
-  ADMIN = 'admin',             // Club Manager
-  USER = 'user',               // Player/Viewer
+  ADMIN = 'admin',
+  USER = 'user',
   SCORER = 'scorer'
-}
-
-export enum BallType {
-  TENNIS = 'Tennis',
-  LEATHER = 'Leather',
-  VICKY = 'Vicky',
-  PLASTIC = 'Plastic',
-  WIND = 'Wind Ball',
-  OTHER = 'Other'
-}
-
-export enum PitchType {
-  ROUGH = 'Rough',
-  CEMENT = 'Cement',
-  TURF = 'Turf',
-  ASTRO_TURF = 'Astro Turf',
-  MATTING = 'Matting'
-}
-
-export enum DismissalType {
-  BOWLED = 'Bowled',
-  CAUGHT = 'Caught',
-  LBW = 'LBW',
-  RUN_OUT = 'Run Out',
-  STUMPED = 'Stumped',
-  HIT_WICKET = 'Hit Wicket',
-  RETIRED = 'Retired',
-  OTHER = 'Other'
-}
-
-export interface Club {
-  id: string;
-  name: string;
-  code: string; // Unique joining code
-  location: string;
-  foundedYear: string;
-  ownerId: string;
-  logoUrl?: string;
 }
 
 export interface UserProfile {
@@ -71,17 +30,7 @@ export interface UserProfile {
   email: string;
   name: string;
   role: UserRole;
-  clubId?: string; // Link to the club
   avatarUrl?: string;
-  phone?: string;
-  // Extended Profile Fields
-  battingStyle?: string;
-  bowlingStyle?: string;
-  primaryRole?: PlayerRole;
-  bio?: string;
-  location?: string;
-  dob?: string;
-  jerseyNumber?: number;
 }
 
 // Points Engine Types
@@ -105,17 +54,12 @@ export interface Player {
   wickets: number;
   avatarUrl: string;
   mvpPoints: number;
-  isPlaying?: boolean; // For squad selection
-  // Links
-  userId?: string; // Link to a registered user
-  teamId?: string;
 }
 
 export interface Team {
   id: string;
   name: string;
   shortName: string;
-  location?: string;
   logoUrl: string;
   players: Player[];
 }
@@ -160,7 +104,6 @@ export interface Inning {
   oversPlayed: string;
   runRate: number;
   didNotBat: string[];
-  recentBalls?: string[]; // Array of strings like "1", "4", "W", "wd"
 }
 
 export interface BallEvent {
@@ -176,46 +119,21 @@ export interface BallEvent {
   scoreDisplay: string; // "142-3"
 }
 
-export interface MatchSettings {
-  wagonWheel: boolean;
-  addExtrasToWide: boolean;
-  addExtrasToNoBall: boolean;
-  ballsPerOver: number; // 4, 5, 6
-  maxBallsPerOver: number; // 6, 7, 8 (with extras)
-  addWideBallsToBatsman: boolean;
-  addWideRunsToBatsman: boolean;
-  addNoBallExtrasToBatsman: boolean;
-  wickets: number;
-  playersPerTeam: number;
-  oversPerBowler: number;
-}
-
 export interface Match {
   id: string;
   teamA: Team;
   teamB: Team;
   date: string;
-  time: string;
   venue: string;
   status: MatchStatus;
   format: MatchFormat;
   season?: string;
   matchTitle?: string;
-  tournamentId?: string;
   tossResult?: string;
   scoreA?: string;
   scoreB?: string;
   result?: string;
-  settings?: MatchSettings;
-  innings?: Inning[]; 
-  ballType?: BallType;
-  pitchType?: PitchType;
-  
-  // Transient state for setup
-  currentBatters?: { strikerId: string; nonStrikerId: string };
-  currentBowlerId?: string;
-  battingTeamId?: string;
-  bowlingTeamId?: string;
+  innings?: Inning[]; // Array of innings details
 }
 
 export interface Tournament {
@@ -223,9 +141,5 @@ export interface Tournament {
   name: string;
   season: string;
   status: string;
-  startDate: string;
-  endDate: string;
-  format: 'League' | 'Knockout' | 'Groups';
-  organizer: string;
-  teams: Team[];
+  teams: number;
 }

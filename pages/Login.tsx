@@ -36,8 +36,7 @@ export const Login: React.FC = () => {
       setError(null);
       try {
           await signInWithGoogle();
-          // If supabaseActive, the redirection happens automatically by Supabase client
-          if (!supabaseActive) navigate('/'); 
+          if (!supabaseActive) navigate('/'); // Mock needs manual redirect
       } catch (err: any) {
           setError(err.message);
           setLoading(false);

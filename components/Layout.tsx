@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { LayoutDashboard, Gamepad2, Users, Trophy, User, LogOut, Menu, X, Moon, Sun, Settings, ShieldCheck } from 'lucide-react';
+import { LayoutDashboard, Gamepad2, Users, Trophy, User, LogOut, Menu, X, Moon, Sun, Settings, ShieldCheck, Shield } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
@@ -12,7 +12,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { userProfile, signOut, isAdmin } = useAuth();
+  const { userProfile, signOut, isAdmin, club } = useAuth();
 
   // Dark Mode Logic - Default to Dark
   const [isDarkMode, setIsDarkMode] = React.useState(() => {
@@ -38,7 +38,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
     { label: 'Matches', icon: Gamepad2, path: '/matches' },
     { label: 'Tournaments', icon: Trophy, path: '/tournaments' },
-    { label: 'Teams', icon: Users, path: '/teams' },
+    // Show 'My Club' if part of one, or 'Create Club' if not (but handled by same page)
+    { label: club ? 'My Club' : 'Create Club', icon: Shield, path: '/club' },
+    { label: 'Match Teams', icon: Users, path: '/teams' },
     { label: 'My Profile', icon: User, path: '/profile' },
   ];
 

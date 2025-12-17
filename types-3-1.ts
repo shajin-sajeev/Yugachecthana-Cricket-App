@@ -22,9 +22,9 @@ export enum MatchStatus {
 }
 
 export enum UserRole {
-  SUPER_ADMIN = 'super_admin', // Club Creator
-  ADMIN = 'admin',             // Club Manager
-  USER = 'user',               // Player/Viewer
+  SUPER_ADMIN = 'super_admin',
+  ADMIN = 'admin',
+  USER = 'user',
   SCORER = 'scorer'
 }
 
@@ -45,43 +45,12 @@ export enum PitchType {
   MATTING = 'Matting'
 }
 
-export enum DismissalType {
-  BOWLED = 'Bowled',
-  CAUGHT = 'Caught',
-  LBW = 'LBW',
-  RUN_OUT = 'Run Out',
-  STUMPED = 'Stumped',
-  HIT_WICKET = 'Hit Wicket',
-  RETIRED = 'Retired',
-  OTHER = 'Other'
-}
-
-export interface Club {
-  id: string;
-  name: string;
-  code: string; // Unique joining code
-  location: string;
-  foundedYear: string;
-  ownerId: string;
-  logoUrl?: string;
-}
-
 export interface UserProfile {
   id: string;
   email: string;
   name: string;
   role: UserRole;
-  clubId?: string; // Link to the club
   avatarUrl?: string;
-  phone?: string;
-  // Extended Profile Fields
-  battingStyle?: string;
-  bowlingStyle?: string;
-  primaryRole?: PlayerRole;
-  bio?: string;
-  location?: string;
-  dob?: string;
-  jerseyNumber?: number;
 }
 
 // Points Engine Types
@@ -106,9 +75,6 @@ export interface Player {
   avatarUrl: string;
   mvpPoints: number;
   isPlaying?: boolean; // For squad selection
-  // Links
-  userId?: string; // Link to a registered user
-  teamId?: string;
 }
 
 export interface Team {
@@ -160,7 +126,6 @@ export interface Inning {
   oversPlayed: string;
   runRate: number;
   didNotBat: string[];
-  recentBalls?: string[]; // Array of strings like "1", "4", "W", "wd"
 }
 
 export interface BallEvent {
